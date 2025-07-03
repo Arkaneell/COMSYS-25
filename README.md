@@ -12,7 +12,7 @@ Input (224×224×3) → ResNet50 (Frozen) → Conv2D(64) → SE Block → CBAM �
 ![image](https://github.com/user-attachments/assets/21127d7e-146b-470c-b91e-5fea95654063)
 
 
-# ## Task B: TRF-Net: Triplet ResNet Fusion Network for Robust Face Recognition
+## Task B: TRF-Net: Triplet ResNet Fusion Network for Robust Face Recognition
 
 **TRF-Net** is a deep learning architecture designed for robust face recognition that combines transfer learning, attention mechanisms, and triplet loss optimization to handle challenging scenarios including distorted and degraded facial images. The network leverages a pre-trained ResNet50 backbone as a feature extractor, followed by custom convolutional layers enhanced with Squeeze-and-Excitation (SE) blocks and Convolutional Block Attention Module (CBAM) for improved feature representation. The SE blocks perform channel-wise attention by learning channel relationships through global average pooling and fully connected layers, while CBAM provides both channel and spatial attention mechanisms to focus on discriminative facial features. The network outputs 128-dimensional L2-normalized embeddings that capture essential facial characteristics in a compact representation.
 
