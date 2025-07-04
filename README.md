@@ -23,6 +23,9 @@ Input (224×224×3) → ResNet50 (Frozen) → Conv2D(64) → SE Block → CBAM �
    macro avg       0.87      0.84      0.85       422
 weighted avg       0.89      0.90      0.89       422
 ```
+![image](https://github.com/user-attachments/assets/18e0c9a7-2d6a-4803-8654-0218e8ff7181)
+
+
 
 ![image](https://github.com/user-attachments/assets/21127d7e-146b-470c-b91e-5fea95654063)
 
