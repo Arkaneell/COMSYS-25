@@ -6,11 +6,24 @@ RCG-Net presents a sophisticated deep learning architecture for binary gender cl
 The network architecture follows a sequential flow: input images are processed through the frozen ResNet50 backbone, followed by a 64-filter convolutional layer with ReLU activation, then the SE block for channel attention, CBAM for dual attention, another 32-filter convolutional layer, global average pooling, a 64-unit dense layer with dropout regularization (0.4), and finally a single-unit sigmoid output layer for binary classification. The model is trained using the Adam optimizer with binary cross-entropy loss over 100 epochs with a batch size of 16, where labels are encoded as 0 for female and 1 for male classifications.
 Data preprocessing follows ResNet50 specifications with mean centering and scaling, while comprehensive evaluation includes confusion matrix analysis, classification reports with precision/recall/F1-score metrics, and training curve visualization. The dual attention mechanism significantly enhances feature selection by emphasizing important channels through SE blocks while simultaneously focusing on relevant spatial regions via CBAM, resulting in improved classification accuracy. This architecture demonstrates the effectiveness of combining established CNN backbones with modern attention mechanisms for robust gender classification tasks in computer vision applications.
 ### Architecture Flow Diagram
+
+### To Run the code, just run the RCG-NET jupyter notebook, to get the Regendernet.h5 file (too large to upload on github), so from the testscript.py it can run the test dataset.
 ```
 Input (224×224×3) → ResNet50 (Frozen) → Conv2D(64) → SE Block → CBAM → Conv2D(32) → GAP → Dense(64) → Dropout(0.4) → Dense(1, Sigmoid) → Gender Prediction
 ```
-![image](https://github.com/user-attachments/assets/21127d7e-146b-470c-b91e-5fea95654063)
+## The Scores on the validation set:
+ ```
+              precision    recall  f1-score   support
 
+      Female       0.84      0.72      0.78       105
+        Male       0.91      0.95      0.93       317
+
+    accuracy                           0.90       422
+   macro avg       0.87      0.84      0.85       422
+weighted avg       0.89      0.90      0.89       422
+```
+
+![image](https://github.com/user-attachments/assets/21127d7e-146b-470c-b91e-5fea95654063)
 
 ## Task B: TRF-Net: Triplet ResNet Fusion Network for Robust Face Recognition
 
