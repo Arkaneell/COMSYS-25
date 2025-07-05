@@ -56,6 +56,8 @@ Optionally, a similarity **threshold** can be applied to reject unknown faces (e
 
 TRF-Net demonstrates **strong generalization** in handling image distortions such as **blur, rain, low resolution**, etc., and is well-suited for real-time deployment scenarios like surveillance, access control, and identity verification in unconstrained environments.
 
+### Instructions:
+To implement TRF-Net locally, first clone the repository and ensure you have Python 3.8+ installed with TensorFlow, OpenCV, and scikit-learn dependencies (you can install them using pip install -r requirements.txt). The trained face embedding model (.h5 file) with custom SE and CBAM layers should be placed in the project root or specified in testscript.py. Organize your data into reference and test folders with each identity in its own subfolder containing face images. Then run the evaluation using python testscript.py --model best_triplet_model.h5(Download this from the "download the model" file) --reference ./reference_data --test ./test_data to compute embeddings, perform cosine similarity-based matching, and display classification results. Make sure the input images are RGB face crops resized to 224×224 for best results.
 
 ### Architecture Flow Diagram
 ![image](https://github.com/user-attachments/assets/ba2201e1-4f59-42be-b185-4508a0dae484)
