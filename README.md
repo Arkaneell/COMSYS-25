@@ -32,10 +32,37 @@ weighted avg       0.89      0.90      0.89       422
 
 ## Task B: TRF-Net: Triplet ResNet Fusion Network for Robust Face Recognition
 
-**TRF-Net** is a deep learning architecture designed for robust face recognition that combines transfer learning, attention mechanisms, and triplet loss optimization to handle challenging scenarios including distorted and degraded facial images. The network leverages a pre-trained ResNet50 backbone as a feature extractor, followed by custom convolutional layers enhanced with Squeeze-and-Excitation (SE) blocks and Convolutional Block Attention Module (CBAM) for improved feature representation. The SE blocks perform channel-wise attention by learning channel relationships through global average pooling and fully connected layers, while CBAM provides both channel and spatial attention mechanisms to focus on discriminative facial features. The network outputs 128-dimensional L2-normalized embeddings that capture essential facial characteristics in a compact representation.
+**TRF-Net** is a face recognition framework built for real-world scenarios where image quality can be degraded due to environmental or acquisition issues. It combines the strength of transfer learning with advanced attention mechanisms and distance-based metric learning for high-precision identity verification and classification.
 
-The training methodology employs triplet loss with a margin of 0.2, where each training sample consists of an anchor image (clean face), a positive image (distorted version of the same person), and a negative image (different person). This approach enables the network to learn robust embeddings that minimize intra-class distance while maximizing inter-class separation. The triplet generation strategy specifically pairs clean facial images with their corresponding distorted variants (including rainy, blurry, or other degradations) as positive samples, ensuring the model learns invariance to common image distortions. The network processes 224×224 RGB images normalized to [0,1] range and uses Adam optimizer with custom accuracy metrics that measure the proportion of triplets where the anchor-positive distance is smaller than the anchor-negative distance.
+The architecture is based on a **frozen ResNet50** backbone pre-trained on ImageNet for feature extraction, followed by **custom convolutional layers** enhanced with **Squeeze-and-Excitation (SE)** blocks and **Convolutional Block Attention Modules (CBAM)**. These attention blocks allow the network to focus on the most discriminative facial features by applying both **channel-wise** and **spatial** attention refinement.
 
-For inference, TRF-Net computes embeddings for query faces and matches them against a reference database using cosine similarity. The system achieves face recognition by identifying the closest match above a predefined threshold, with the ability to reject unknown faces when similarity scores fall below the threshold. The network's architecture enables efficient processing of large-scale datasets while maintaining high accuracy on both clean and distorted facial images, making it particularly suitable for real-world applications where image quality may be compromised due to environmental factors or acquisition conditions.
+TRF-Net is trained using a **triplet loss function** with a margin of `0.2`, where each training sample consists of:
 
-![image](https://github.com/user-attachments/assets/886181f4-504a-4843-b90e-c09903cc004a)
+* an **anchor** image (usually a clean image),
+* a **positive** image (a distorted version of the same person), and
+* a **negative** image (an image of a different person).
+
+This training strategy teaches the network to **minimize intra-class distance** (anchor-positive) and **maximize inter-class distance** (anchor-negative) within a learned **128-dimensional L2-normalized embedding space**.
+
+All images are resized to **224×224 RGB** and normalized for input. During inference, TRF-Net computes embeddings for both **reference identities** (enrolled faces) and **query/test images**. Identification is performed via **cosine similarity**, where a test image is matched to the reference identity with the highest similarity score.
+
+A robust test pipeline has been designed where:
+
+* One image per identity is used to create reference embeddings.
+* Test images (including unseen identities) are matched against the reference database.
+* Top-1 prediction and **macro-averaged F1 scores** are computed to evaluate performance.
+
+Optionally, a similarity **threshold** can be applied to reject unknown faces (e.g., when similarity is too low).
+
+TRF-Net demonstrates **strong generalization** in handling image distortions such as **blur, rain, low resolution**, etc., and is well-suited for real-time deployment scenarios like surveillance, access control, and identity verification in unconstrained environments.
+
+
+### Architecture Flow Diagram
+![image](https://github.com/user-attachments/assets/ba2201e1-4f59-42be-b185-4508a0dae484)
+## The Scores on the validation set:
+![download](https://github.com/user-attachments/assets/0cbe1545-015c-403d-9c78-c9576166aaac)
+
+```
+Top-1 Accuracy: 60.43%
+Macro F1 Score: 0.7434
+```
